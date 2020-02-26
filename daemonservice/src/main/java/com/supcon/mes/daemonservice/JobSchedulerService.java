@@ -41,6 +41,10 @@ public class JobSchedulerService  extends JobService {
         }
     }
 
+    /**
+    *如果返回值是false,系统假设这个方法返回时任务已经执行完毕。
+     * 如果返回值是true,那么系统假定这个任务正要被执行
+     */
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Log.d(TAG,"onStartJob");
@@ -48,10 +52,14 @@ public class JobSchedulerService  extends JobService {
         return true;
     }
 
+    /**
+     *返回false,那么系统假定在接收到一个取消请求时已经没有正在运行的任务
+     * 返回ture,取消正在等待执行的任务
+     */
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         Log.d(TAG,"onStopJob");
         DaemonHolder.stopService();
-        return false;
+        return true;
     }
 }
