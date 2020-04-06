@@ -28,7 +28,7 @@ public abstract class AbsHeartBeatService extends Service {
         }
     };
 
-    private SupconAidl aidl=new SupconAidl.Stub() {
+    private SupconAidl aidl = new SupconAidl.Stub() {
         @Override
         public void startService() throws RemoteException {
             Log.d(TAG, "aidl startService()");
@@ -42,7 +42,7 @@ public abstract class AbsHeartBeatService extends Service {
 
     };
 
-    private  ServiceConnection serviceConnection = new ServiceConnection() {
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "onServiceConnected() 已绑定");
@@ -78,13 +78,14 @@ public abstract class AbsHeartBeatService extends Service {
         }
     };
 
-    boolean bind=false;
+    boolean bind = false;
+
     private void startBindService() {
         try {
             startService(new Intent(this, DaemonService.class));
-            bind=bindService(new Intent(this, DaemonService.class), serviceConnection, Context.BIND_IMPORTANT);
-            Log.i(TAG,"-->"+bind);
-            System.out.println(TAG+"-->"+bind);
+            bind = bindService(new Intent(this, DaemonService.class), serviceConnection, Context.BIND_IMPORTANT);
+            Log.i(TAG, "-->" + bind);
+            System.out.println(TAG + "-->" + bind);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,7 +124,6 @@ public abstract class AbsHeartBeatService extends Service {
 
         try {
             onStopService();
-
             if (bind)
                 unbindService(serviceConnection);
             DaemonHolder.restartService(getApplicationContext(), DaemonHolder.mService);
